@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travelly - Home Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .phone-container {
+            width: 390px;
+            height: 844px;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .status-bar {
+            height: 44px;
+            background: linear-gradient(135deg, #4CAF50 0%, #009688 100%);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            color: white;
+            font-size: 12px;
+        }
+
+        .app-content {
+            flex: 1;
+            overflow-y: auto;
+            background: linear-gradient(180deg, #f8f9fa 0%, #e9ecef 100%);
+            padding-bottom: 80px;
+        }
+
+        .app-content::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .app-content::-webkit-scrollbar-thumb {
+            background: #4CAF50;
+            border-radius: 10px;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #4CAF50 0%, #009688 100%);
+            padding: 30px 20px;
+            color: white;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .card-custom {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin: 15px 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            animation: slideUp 0.6s ease-out;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .summary-item {
+            text-align: center;
+            padding: 15px;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 15px;
+        }
+
+        .summary-item i {
+            font-size: 24px;
+            color: #4CAF50;
+            margin-bottom: 8px;
+        }
+
+        .summary-item .value {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .summary-item .label {
+            font-size: 11px;
+            color: #666;
+            margin-top: 5px;
+        }
+
+        .btn-custom {
+            width: 100%;
+            padding: 15px;
+            border-radius: 25px;
+            border: none;
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: 12px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .btn-primary-custom {
+            background: linear-gradient(135deg, #4CAF50 0%, #009688 100%);
+            color: white;
+        }
+
+        .btn-primary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(76, 175, 80, 0.4);
+        }
+
+        .btn-secondary-custom {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-secondary-custom:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .motivation-box {
+            background: linear-gradient(135deg, #FFD700 0%, #FFA500 100%);
+            color: #333;
+            padding: 20px;
+            border-radius: 20px;
+            text-align: center;
+            margin: 15px 20px;
+            font-weight: 600;
+            font-size: 16px;
+            animation: pulse 2s infinite;
+        }
+
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 390px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            border-radius: 30px 30px 0 0;
+        }
+
+        .nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-decoration: none;
+            color: #999;
+            transition: all 0.3s ease;
+            padding: 5px 15px;
+        }
+
+        .nav-item.active {
+            color: #4CAF50;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+            margin-bottom: 5px;
+        }
+
+        .nav-item span {
+            font-size: 11px;
+            font-weight: 500;
+        }
+
+        .nav-item:hover {
+            color: #4CAF50;
+            transform: translateY(-3px);
+        }
+
+        /* Optimizer Page Styles */
+        .input-group-custom {
+            margin-bottom: 20px;
+        }
+
+        .input-group-custom label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        .input-group-custom input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 15px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .input-group-custom input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .weather-widget {
+            background: linear-gradient(135deg, #56CCF2 0%, #2F80ED 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .weather-widget i {
+            font-size: 48px;
+        }
+
+        .weather-info h3 {
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .weather-info p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .route-card {
+            background: white;
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .route-card.smart {
+            border: 3px solid #4CAF50;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            animation: glow 2s infinite;
+        }
+
+        .route-card h4 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .route-card.smart h4 {
+            color: #4CAF50;
+        }
+
+        .route-details {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .route-detail-item {
+            text-align: center;
+        }
+
+        .route-detail-item i {
+            color: #4CAF50;
+            margin-bottom: 5px;
+        }
+
+        .route-detail-item .value {
+            font-size: 16px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .route-detail-item .label {
+            font-size: 11px;
+            color: #666;
+        }
+
+        /* Rewards Page Styles */
+        .badge-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+            margin: 20px 0;
+        }
+
+        .badge-item {
+            background: white;
+            padding: 20px 10px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .badge-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+        }
+
+        .badge-item i {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .badge-item.eco {
+            color: #4CAF50;
+        }
+
+        .badge-item.saver {
+            color: #FFD700;
+        }
+
+        .badge-item.hero {
+            color: #2196F3;
+        }
+
+        .badge-item .badge-name {
+            font-size: 12px;
+            font-weight: 600;
+            color: #333;
+        }
+
+        .weekly-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .weekly-summary h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .weekly-summary p {
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Weather Alert Page Styles */
+        .alert-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 500px;
+            padding: 20px;
+        }
+
+        .alert-card {
+            background: white;
+            padding: 40px 30px;
+            border-radius: 25px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            max-width: 320px;
+        }
+
+        .alert-card i {
+            font-size: 80px;
+            color: #2196F3;
+            margin-bottom: 20px;
+        }
+
+        .alert-card h2 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .alert-card p {
+            color: #666;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* Progress Page Styles */
+        .progress-section {
+            margin-bottom: 25px;
+        }
+
+        .progress-section h4 {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 15px;
+            font-size: 16px;
+        }
+
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .progress-label span:first-child {
+            color: #666;
+        }
+
+        .progress-label span:last-child {
+            color: #4CAF50;
+            font-weight: 600;
+        }
+
+        .progress {
+            height: 12px;
+            border-radius: 10px;
+            background: #e0e0e0;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #4CAF50 0%, #009688 100%);
+            border-radius: 10px;
+        }
+
+        .quote-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 20px;
+            text-align: center;
+            margin-top: 30px;
+        }
+
+        .quote-box i {
+            font-size: 30px;
+            margin-bottom: 15px;
+        }
+
+        .quote-box p {
+            font-size: 16px;
+            font-style: italic;
+            line-height: 1.6;
+        }
+
+        .back-btn {
+            background: #f0f0f0;
+            color: #666;
+            padding: 12px 25px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            font-size: 14px;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            background: #e0e0e0;
+            transform: translateX(-5px);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+            0%, 100% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.02);
+            }
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 30px rgba(76, 175, 80, 0.6);
+            }
+        }
+
+        /* Page transition */
+        .page-transition {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="phone-container">
+        <div class="status-bar">
+            <span>9:41</span>
+            <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+        </div>
+
+        <div class="app-content page-transition" id="homePage">
+            <div class="header">
+                <h1>Hello, Traveler! 👋</h1>
+                <p>Let's make today's journey eco-friendly</p>
+            </div>
+
+            <div class="card-custom">
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: #333;">Today's Commute Summary</h3>
+                <div class="summary-grid">
+                    <div class="summary-item">
+                        <i class="fas fa-dollar-sign"></i>
+                        <div class="value">$8.50</div>
+                        <div class="label">Cost</div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-clock"></i>
+                        <div class="value">32 min</div>
+                        <div class="label">Time</div>
+                    </div>
+                    <div class="summary-item">
+                        <i class="fas fa-cloud-sun"></i>
+                        <div class="value">72°F</div>
+                        <div class="label">Weather</div>
+                    </div>
+                </div>
+            </div>
+
+            <div style="padding: 0 20px;">
+                <button class="btn-custom btn-primary-custom" onclick="navigateTo('optimizer')">
+                    <i class="fas fa-route"></i> Plan Trip
+                </button>
+                <button class="btn-custom btn-secondary-custom" onclick="navigateTo('rewards')">
+                    <i class="fas fa-trophy"></i> View Rewards
+                </button>
+                <button class="btn-custom" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;" onclick="navigateTo('progress')">
+                    <i class="fas fa-chart-line"></i> My Progress
+                </button>
+            </div>
+
+            <div class="motivation-box">
+                <i class="fas fa-heart"></i> Every trip counts!
+            </div>
+        </div>
+
+        <div class="app-content page-transition" id="optimizerPage" style="display: none;">
+            <div class="header">
+                <button class="back-btn" onclick="navigateTo('home')">
+                    <i class="fas fa-arrow-left"></i> Go Back
+                </button>
+                <h1>Smart Commute</h1>
+                <p>Find the best route for you</p>
+            </div>
+
+            <div class="card-custom">
+                <div class="input-group-custom">
+                    <label><i class="fas fa-map-marker-alt"></i> Start Location</label>
+                    <input type="text" placeholder="Enter your starting point" value="Home">
+                </div>
+                <div class="input-group-custom">
+                    <label><i class="fas fa-flag-checkered"></i> Destination</label>
+                    <input type="text" placeholder="Where are you going?" value="Office">
+                </div>
+            </div>
+
+            <div style="padding: 0 20px;">
+                <div class="weather-widget">
+                    <div class="weather-info">
+                        <h3>72°F Sunny</h3>
+                        <p>Perfect day for cycling!</p>
+                    </div>
+                    <i class="fas fa-sun"></i>
+                </div>
+
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: #333;">Route Options</h3>
+
+                <div class="route-card smart">
+                    <h4><i class="fas fa-star"></i> Smart Suggestion</h4>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="value">28 min</div>
+                            <div class="label">Time</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="value">$3.50</div>
+                            <div class="label">Cost</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-leaf"></i>
+                            <div class="value">0.8 kg</div>
+                            <div class="label">CO₂</div>
+                        </div>
+                    </div>
+                    <button class="btn-custom btn-primary-custom">
+                        <i class="fas fa-bicycle"></i> Take This Route
+                    </button>
+                </div>
+
+                <div class="route-card">
+                    <h4><i class="fas fa-bus"></i> Public Transit</h4>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="value">35 min</div>
+                            <div class="label">Time</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="value">$2.75</div>
+                            <div class="label">Cost</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-leaf"></i>
+                            <div class="value">1.2 kg</div>
+                            <div class="label">CO₂</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="route-card">
+                    <h4><i class="fas fa-car"></i> Drive</h4>
+                    <div class="route-details">
+                        <div class="route-detail-item">
+                            <i class="fas fa-clock"></i>
+                            <div class="value">20 min</div>
+                            <div class="label">Time</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-dollar-sign"></i>
+                            <div class="value">$5.20</div>
+                            <div class="label">Cost</div>
+                        </div>
+                        <div class="route-detail-item">
+                            <i class="fas fa-leaf"></i>
+                            <div class="value">3.5 kg</div>
+                            <div class="label">CO₂</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content page-transition" id="rewardsPage" style="display: none;">
+            <div class="header">
+                <h1>Your Rewards 🏆</h1>
+                <p>Keep up the great work!</p>
+            </div>
+
+            <div class="card-custom">
+                <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 15px; color: #333;">Earned Badges</h3>
+                <div class="badge-grid">
+                    <div class="badge-item eco">
+                        <i class="fas fa-seedling"></i>
+                        <div class="badge-name">Eco Starter</div>
+                    </div>
+                    <div class="badge-item saver">
+                        <i class="fas fa-piggy-bank"></i>
+                        <div class="badge-name">Money Saver</div>
+                    </div>
+                    <div class="badge-item hero">
+                        <i class="fas fa-award"></i>
+                        <div class="badge-name">Tiny Win Hero</div>
+                    </div>
+                    <div class="badge-item" style="color: #FF5722;">
+                        <i class="fas fa-bicycle"></i>
+                        <div class="badge-name">Bike Master</div>
+                    </div>
+                    <div class="badge-item" style="color: #9C27B0;">
+                        <i class="fas fa-bus"></i>
+                        <div class="badge-name">Transit Pro</div>
+                    </div>
+                    <div class="badge-item" style="color: #FF9800;">
+                        <i class="fas fa-fire"></i>
+                        <div class="badge-name">7-Day Streak</div>
+                    </div>
+                </div>
+
+                <div class="weekly-summary">
+                    <h3>This Week's Impact</h3>
+                    <p><strong>You saved $10</strong> and reduced <strong>1.5kg CO₂</strong> this week! 🌱</p>
+                    <p style="margin-top: 10px; font-size: 14px;">That's equivalent to planting 0.5 trees!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content page-transition" id="weatherPage" style="display: none;">
+            <div class="alert-container">
+                <div class="alert-card">
+                    <i class="fas fa-cloud-rain"></i>
+                    <h2>Weather Alert!</h2>
+                    <p>It's raining! Would you like to take the bus instead of cycling?</p>
+                    <button class="btn-custom btn-primary-custom" onclick="navigateTo('optimizer')">
+                        <i class="fas fa-route"></i> Show Route Options
+                    </button>
+                    <button class="btn-custom" style="background: #f0f0f0; color: #666;" onclick="navigateTo('home')">
+                        <i class="fas fa-times"></i> Ignore
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="app-content page-transition" id="progressPage" style="display: none;">
+            <div class="header">
+                <h1>Your Progress 📊</h1>
+                <p>Track your sustainable journey</p>
+            </div>
+
+            <div class="card-custom">
+                <div class="progress-section">
+                    <h4><i class="fas fa-dollar-sign"></i> Weekly Cost Savings</h4>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>This Week</span>
+                            <span>$10.00 / $15.00</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 67%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <h4><i class="fas fa-leaf"></i> CO₂ Reduced</h4>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>This Month</span>
+                            <span>12.5 kg / 20.0 kg</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 62.5%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="progress-section">
+                    <h4><i class="fas fa-clock"></i> Time Optimized</h4>
+                    <div class="progress-item">
+                        <div class="progress-label">
+                            <span>This Week</span>
+                            <span>2.5 hrs / 4.0 hrs</span>
+                        </div>
+                        <div class="progress">
+                            <div class="progress-bar" role="progressbar" style="width: 62.5%"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="quote-box">
+                    <i class="fas fa-quote-left"></i>
+                    <p>"Small steps make a big impact."</p>
+                </div>
+
+                <button class="btn-custom btn-primary-custom" onclick="navigateTo('home')" style="margin-top: 20px;">
+                    <i class="fas fa-home"></i> Back to Home
+                </button>
+            </div>
+        </div>
+
+        <div class="bottom-nav">
+            <a href="#" class="nav-item active" data-page="home" onclick="navigateTo('home'); return false;">
+                <i class="fas fa-home"></i>
+                <span>Home</span>
+            </a>
+            <a href="#" class="nav-item" data-page="optimizer" onclick="navigateTo('optimizer'); return false;">
+                <i class="fas fa-route"></i>
+                <span>Plan</span>
+            </a>
+            <a href="#" class="nav-item" data-page="rewards" onclick="navigateTo('rewards'); return false;">
+                <i class="fas fa-trophy"></i>
+                <span>Rewards</span>
+            </a>
+            <a href="#" class="nav-item" data-page="progress" onclick="navigateTo('progress'); return false;">
+                <i class="fas fa-chart-line"></i>
+                <span>Progress</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.app-content').forEach(p => {
+                p.style.display = 'none';
+            });
+
+            // Show selected page
+            const pageMap = {
+                'home': 'homePage',
+                'optimizer': 'optimizerPage',
+                'rewards': 'rewardsPage',
+                'weather': 'weatherPage',
+                'progress': 'progressPage'
+            };
+
+            const pageId = pageMap[page];
+            const pageElement = document.getElementById(pageId);
+            
+            if (pageElement) {
+                pageElement.style.display = 'block';
+                pageElement.scrollTop = 0;
+            }
+
+            // Update active nav item
+            document.querySelectorAll('.nav-item').forEach(item => {
+                item.classList.remove('active');
+                if (item.dataset.page === page) {
+                    item.classList.add('active');
+                }
+            });
+        }
+
+        // Add smooth scroll behavior
+        document.querySelectorAll('.app-content').forEach(content => {
+            content.style.scrollBehavior = 'smooth';
+        });
+
+        // Add button press effect
+        document.querySelectorAll('button, .btn-custom').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                this.style.transform = 'scale(0.95)';
+                setTimeout(() => {
+                    this.style.transform = '';
+                }, 150);
+            });
+        });
+
+        // Random weather alert popup (optional feature)
+        function showWeatherAlert() {
+            const shouldShow = Math.random() > 0.7;
+            if (shouldShow && document.getElementById('homePage').style.display !== 'none') {
+                setTimeout(() => {
+                    if (confirm('Weather Alert: It\'s raining! View route options?')) {
+                        navigateTo('weather');
+                    }
+                }, 3000);
+            }
+        }
+
+        // Initialize app
+        document.addEventListener('DOMContentLoaded', function() {
+            // Ensure home page is visible on load
+            navigateTo('home');
+            
+            // Add hover effects for route cards
+            document.querySelectorAll('.route-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if (!this.classList.contains('smart')) {
+                        this.style.transform = 'translateY(-5px)';
+                        this.style.boxShadow = '0 8px 25px rgba(0,0,0,0.15)';
+                    }
+                });
+                card.addEventListener('mouseleave', function() {
+                    if (!this.classList.contains('smart')) {
+                        this.style.transform = '';
+                        this.style.boxShadow = '';
+                    }
+                });
+            });
+
+            // Add animation to progress bars
+            setTimeout(() => {
+                document.querySelectorAll('.progress-bar').forEach(bar => {
+                    bar.style.transition = 'width 1.5s ease-out';
+                });
+            }, 500);
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
